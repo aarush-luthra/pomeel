@@ -43,7 +43,7 @@ ANNOTATE_JS = r"""
     const cs = getComputedStyle(el);
     if (cs.visibility === 'hidden' || cs.display === 'none' || cs.opacity === '0') continue;
     el.setAttribute('data-dp-bbox',
-      [Math.round(r.left + sx), Math.round(r.top + sy), Math.round(r.width), Math.round(r.height)].join(','));
+      [r.left + sx, r.top + sy, r.width, r.height].some(v => !isFinite(v)) ? '' : [Math.round(r.left + sx), Math.round(r.top + sy), Math.round(r.width), Math.round(r.height)].join(','));
     if ((cs.textDecorationLine || cs.textDecoration || '').includes('line-through'))
       el.setAttribute('data-dp-strike', '1');
     if (tag === 'INPUT' && (el.type === 'checkbox' || el.type === 'radio'))

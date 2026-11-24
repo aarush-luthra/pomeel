@@ -69,7 +69,10 @@ def bbox_of(el):
     while el is not None and getattr(el, "attrs", None) is not None:
         b = el.attrs.get("data-dp-bbox")
         if b:
-            return [int(v) for v in b.split(",")]
+            try:
+                return [int(v) for v in b.split(",")]
+            except ValueError:  # e.g. "NaN" from an element with no layout box
+                return None
         el = el.parent
     return None
 
@@ -215,7 +218,7 @@ def extract_page(meta):
             if seen[key] > MAX_DUPES:
                 continue
             bbox = bbox_of(el)
-            rid = hashlib.sha1(f"{meta['url']}|{etype}|{text}|{seen[key]}".encode()).hexdigest()[:12]
+            rid = hashlib.sha1(f"{meta['site']}|{meta['page_type']}|{meta['url']}|{etype}|{text}|{seen[key]}".encode()).hexdigest()[:12]
             if etype == "subscription":
                 extra = {**extra, "cancel_text_on_page": bool(re.search(r"\bcancel", page_text, re.I))}
             out.append({
