@@ -1,0 +1,15 @@
+# secrets
+.env
+.env.local
+.env.*.local
+
+# scraped pages, screenshots, crops, vector DB (copies of third-party sites; regenerate with `python run.py all`)
+scraper/data/
+scraper/collect_log.txt
+# generated report (names real businesses; publish deliberately, not by default)
+scraper/report/
+
+__pycache__/
+*.pyc
+.DS_Store
+.claude/

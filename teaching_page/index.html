@@ -1,0 +1,410 @@
+<title>Dark Patterns in Online Shopping</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: overview grid of the six patterns, then one wide "specimen" card per pattern with two browser-window mockups side by side. Light theme only. */
+:root{
+  --bg:#f4f6f9; --paper:#ffffff; --ink:#111a24; --ink2:#4b5867; --muted:#7c8896; --line:#e2e7ee; --soft:#eef2f7;
+  --bad:#c42f2b; --bad-soft:#fdeceb; --good:#0f7a5f; --good-soft:#e3f5ee; --accent:#2f5bd3; --accent-soft:#e8eefc;
+  --screen:#ffffff; --screen-ink:#1b1b1b; --screen-line:#e7e9ed; --screen-dim:#8a8f97; --hot:#e5402f; --btn:#16263b;
+  --f-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  --shadow:0 1px 2px rgba(17,26,36,.05), 0 8px 24px -12px rgba(17,26,36,.12);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1080px;margin:0 auto;padding-block:64px 48px}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0}
+
+/* hero */
+header.top{display:grid;gap:18px;margin-bottom:28px}
+.eyebrow{font:700 12.5px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(38px,6vw,64px);line-height:1.02;font-weight:700;letter-spacing:-.025em;max-width:15ch}
+h1 em{font-style:normal;color:var(--bad);background:linear-gradient(transparent 62%, var(--bad-soft) 62%)}
+.lede{color:var(--ink2);max-width:64ch;font-size:18.5px;margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:10px}
+.pill{display:inline-flex;align-items:center;gap:8px;font:600 14px/1 var(--f-body);padding:8px 12px;border-radius:99px}
+.pill.bad{background:var(--bad-soft);color:var(--bad)} .pill.good{background:var(--good-soft);color:var(--good)}
+.dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+
+/* overview grid */
+nav.toc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:8px 0 8px}
+nav.toc a{display:grid;gap:4px;text-decoration:none;color:var(--ink);background:var(--paper);border:1px solid var(--line);
+  border-radius:12px;padding:14px 16px;box-shadow:var(--shadow);transition:border-color .15s, transform .15s}
+nav.toc a b{font:700 17px/1.2 var(--f-display)}
+nav.toc a span{font-size:14px;color:var(--ink2);line-height:1.4}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);transform:translateY(-2px);outline:none}
+
+/* pattern card */
+section.pattern{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:32px;margin-top:28px;
+  display:grid;gap:22px;scroll-margin-top:24px;box-shadow:var(--shadow)}
+.ph{display:grid;gap:10px;max-width:72ch}
+.ph-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+h2{font-size:clamp(26px,3.2vw,34px);font-weight:700;letter-spacing:-.015em}
+.law{font:500 12px/1 var(--f-mono);color:var(--accent);background:var(--accent-soft);padding:6px 10px;border-radius:6px}
+.def{margin:0;color:var(--ink2);font-size:17.5px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.side{display:grid;gap:12px;grid-template-rows:auto 1fr auto auto;min-width:0;border-radius:14px;padding:16px}
+.side.bad{background:var(--bad-soft)} .side.good{background:var(--good-soft)}
+.verdict{font:700 13px/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.side.bad .verdict{color:var(--bad)} .side.good .verdict{color:var(--good)}
+.verdict::before{content:"";width:18px;height:18px;border-radius:50%;flex:none;
+  background:currentColor;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
+.side.bad .verdict::before{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cmask id='m'%3E%3Crect width='20' height='20' fill='white'/%3E%3Cpath d='M6 6l8 8M14 6l-8 8' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/mask%3E%3Ccircle cx='10' cy='10' r='10' mask='url(%23m)'/%3E%3C/svg%3E")}
+.side.good .verdict::before{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cmask id='m'%3E%3Crect width='20' height='20' fill='white'/%3E%3Cpath d='M5.5 10.5l3 3 6-7' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/mask%3E%3Ccircle cx='10' cy='10' r='10' mask='url(%23m)'/%3E%3C/svg%3E")}
+.note{font-size:15.5px;color:var(--ink);margin:0}
+.side.bad .note b{color:var(--bad)} .side.good .note b{color:var(--good)}
+.why{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;background:var(--soft);border-radius:12px;padding:16px 18px;font-size:16px}
+.why strong{font:700 13px/1.9 var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+.why p{margin:0;color:var(--ink)}
+
+/* storefront mock = a small browser window */
+.screen{background:var(--screen);color:var(--screen-ink);border:1px solid var(--screen-line);border-radius:12px;padding:0 16px 16px;
+  font:15px/1.4 var(--f-body);display:grid;gap:11px;align-content:start;min-width:0;overflow:hidden;
+  box-shadow:0 1px 2px rgba(0,0,0,.05), 0 12px 28px -16px rgba(0,0,0,.25)}
+.store{display:flex;align-items:center;gap:10px;margin:0 -16px 4px;padding:9px 12px;background:#f1f3f6;border-bottom:1px solid var(--screen-line);
+  font:700 12px/1 var(--f-body);letter-spacing:.04em;color:#4a4f57}
+.store::before{content:"";width:42px;height:10px;flex:none;
+  background:radial-gradient(circle at 5px 5px,#ff5f57 4px,transparent 4.5px),radial-gradient(circle at 21px 5px,#febc2e 4px,transparent 4.5px),radial-gradient(circle at 37px 5px,#28c840 4px,transparent 4.5px)}
+.store i{font:500 11.5px/1 var(--f-mono);font-style:normal;letter-spacing:0;color:#7a808a;background:#fff;border:1px solid var(--screen-line);
+  border-radius:6px;padding:5px 8px;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.pname{font-weight:700;font-size:16.5px}
+.price{font:700 21px/1 var(--f-mono)}
+.mrp{font:500 14px/1 var(--f-mono);color:var(--screen-dim);text-decoration:line-through;margin-left:8px}
+.off{font:700 12px/1 var(--f-body);color:#fff;background:var(--hot);padding:4px 7px;border-radius:4px;margin-left:8px;vertical-align:3px}
+.offok{font:700 12px/1 var(--f-body);color:#0e5c49;background:#d8f1e8;padding:4px 7px;border-radius:4px;margin-left:8px;vertical-align:3px}
+.badge{justify-self:start;font:700 13px/1 var(--f-body);color:#fff;background:var(--hot);padding:7px 11px;border-radius:5px;animation:pulse 1.4s ease-in-out infinite}
+.viewers{font-size:13.5px;color:#b5261d;font-weight:600}
+.timer{display:flex;gap:8px;align-items:center;font-size:13.5px;color:#b5261d;font-weight:600}
+.timer b{font:700 16px/1 var(--f-mono);background:#1b1b1b;color:#fff;padding:7px 9px;border-radius:6px;font-variant-numeric:tabular-nums}
+.calm{font-size:14px;color:#4d5560}
+.stock{font-size:14px;color:#1f6b3a;font-weight:600}
+.btn{appearance:none;border:0;border-radius:9px;padding:12px 14px;font:700 15px/1 var(--f-body);background:var(--btn);color:#fff;cursor:pointer;width:100%}
+.btn.hot{background:var(--hot)}
+.btn.ghost{background:#fff;color:#1b1b1b;border:1px solid #c9ced6}
+.btn:focus-visible,.link:focus-visible,.ctl:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.link{appearance:none;background:none;border:0;padding:4px;font:inherit;font-size:12.5px;color:#9aa0a8;text-decoration:underline;cursor:pointer;justify-self:center}
+.ctl{appearance:none;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:600 13.5px/1 var(--f-body);padding:9px 13px;border-radius:99px;cursor:pointer;justify-self:start;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.ctl:hover{border-color:var(--accent);color:var(--accent)}
+.rows{display:grid;gap:7px;font-size:14px}
+.row{display:flex;justify-content:space-between;gap:10px}
+.row span:last-child{font-family:var(--f-mono);font-weight:500;font-variant-numeric:tabular-nums}
+.row.fee{color:#b5261d;animation:drop .35s ease-out}
+.row.total{border-top:1px solid var(--screen-line);padding-top:9px;font-weight:700}
+.row.total span:last-child{font-weight:700}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;padding:9px 10px;border-radius:9px;background:#f8f9fb;border:1px solid var(--screen-line);cursor:pointer}
+.check input{width:18px;height:18px;margin:1px 0 0;accent-color:#16263b;flex:none}
+.check small{display:block;color:#8a8f97;font-size:12px}
+.fine{font-size:10.5px;line-height:1.35;color:#a8adb4}
+.clear{font-size:13.5px;line-height:1.45;color:#2d3540;background:#eef7f3;border-radius:9px;padding:10px 11px}
+.modal{border:1px solid var(--screen-line);border-radius:12px;padding:16px;display:grid;gap:10px;text-align:center;background:#fff;box-shadow:0 10px 30px -18px rgba(0,0,0,.35)}
+.modal h4{font:700 18px/1.2 var(--f-display)}
+.modal p{margin:0;font-size:13.5px;color:#5a616b}
+.history{display:flex;align-items:flex-end;gap:3px;height:36px;padding-top:4px}
+.history i{flex:1;background:#c9d6d0;border-radius:2px 2px 0 0}
+.history i.now{background:#0f7a5f}
+.hcap{font-size:11.5px;color:#7a808a;display:flex;justify-content:space-between;gap:8px}
+
+@keyframes pulse{50%{transform:scale(1.04)}}
+@keyframes drop{from{opacity:.2;transform:translateY(-4px)}}
+@media (prefers-reduced-motion: reduce){.badge,.row.fee{animation:none}}
+
+footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);color:var(--ink2);font-size:14.5px;display:grid;gap:8px}
+footer a{color:var(--accent)}
+footer p{margin:0;max-width:78ch}
+
+@media (max-width:860px){ nav.toc{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:700px){
+  .pair{grid-template-columns:1fr}
+  section.pattern{padding:20px}
+  .side{padding:12px}
+  .why{grid-template-columns:1fr;gap:4px}
+  nav.toc{grid-template-columns:1fr}
+}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">Teaching aid · Consumer protection</div>
+  <h1>Dark Patterns in <em>Online Shopping</em></h1>
+  <p class="lede">Six interface tricks named in India's CCPA <i>Guidelines for Prevention and Regulation of Dark Patterns, 2023</i>, each shown next to an honest version of the same screen. The examples are interactive: try the buttons. Every store name here is invented.</p>
+  <div class="legend">
+    <span class="pill bad"><i class="dot"></i>Manipulative design</span>
+    <span class="pill good"><i class="dot"></i>Honest design for the same goal</span>
+  </div>
+  <nav class="toc" aria-label="Patterns">
+    <a href="#false-urgency"><b>False Urgency</b><span>Fake timers, fake stock counts, fake crowds</span></a>
+    <a href="#drip-pricing"><b>Drip Pricing</b><span>Fees that appear only at checkout</span></a>
+    <a href="#basket-sneaking"><b>Basket Sneaking</b><span>Extras added to your cart by default</span></a>
+    <a href="#confirm-shaming"><b>Confirm Shaming</b><span>A "no" button that insults you</span></a>
+    <a href="#subscription-trap"><b>Subscription Trap</b><span>Easy to join, hard to cancel</span></a>
+    <a href="#inflated-price"><b>Inflated Reference Price</b><span>A "was" price nobody ever paid</span></a>
+  </nav>
+</header>
+
+<!-- 1. FALSE URGENCY -->
+<section class="pattern" id="false-urgency">
+  <div class="ph">
+    <div class="ph-top"><h2>False Urgency</h2><span class="law">CCPA 2023 · OECD: Urgency, Social proof</span></div>
+    <p class="def">Claiming or implying that time or stock is running out, or that many others are buying, when it isn't true, so you buy before you think.</p>
+  </div>
+  <div class="pair">
+    <div class="side bad">
+      <div class="verdict">Manipulative</div>
+      <div class="screen" aria-label="Manipulative product page example">
+        <div class="store">Kalpa Audio <i>kalpa-audio.example</i></div>
+        <div class="pname">Kalpa Buds Pro · Wireless Earbuds</div>
+        <div><span class="price">₹1,999</span></div>
+        <span class="badge">Only 2 left in stock!</span>
+        <div class="viewers"><span id="fu-viewers">37</span> people are viewing this right now</div>
+        <div class="timer">Deal ends in <b id="fu-timer">00:09:59</b></div>
+        <button class="btn hot" type="button">Buy now before it's gone</button>
+      </div>
+      <button class="ctl" id="fu-reload" type="button">↻ Simulate a page reload</button>
+      <p class="note"><b>The tell:</b> reload and the clock starts again at ten minutes, and the stock is still "2". The deadline was never real.</p>
+    </div>
+    <div class="side good">
+      <div class="verdict">Honest</div>
+      <div class="screen" aria-label="Honest product page example">
+        <div class="store">Kalpa Audio <i>kalpa-audio.example</i></div>
+        <div class="pname">Kalpa Buds Pro · Wireless Earbuds</div>
+        <div><span class="price">₹1,999</span></div>
+        <div class="stock">In stock · ships in 2 days</div>
+        <div class="calm">Festive sale price valid until <b>3 Nov, 11:59 pm IST</b>.</div>
+        <button class="btn" type="button">Add to cart</button>
+      </div>
+      <button class="ctl" id="fu-reload-ok" type="button">↻ Simulate a page reload</button>
+      <p class="note"><b>Why it's fair:</b> the sale has a fixed calendar end date that is the same for everyone and every visit.</p>
+    </div>
+  </div>
+  <div class="why"><strong>Why it works</strong><p>Scarcity and loss aversion. When we think we might lose a deal, we weigh the loss more heavily than the gain and skip comparing prices.</p></div>
+</section>
+
+<!-- 2. DRIP PRICING -->
+<section class="pattern" id="drip-pricing">
+  <div class="ph">
+    <div class="ph-top"><h2>Drip Pricing</h2><span class="law">CCPA 2023 · OECD: Sneaking</span></div>
+    <p class="def">Showing a low price first and revealing the other parts of the price (platform, handling or convenience fees) only at the cart or checkout.</p>
+  </div>
+  <div class="pair">
+    <div class="side bad">
+      <div class="verdict">Manipulative</div>
+      <div class="screen" aria-label="Manipulative checkout example">
+        <div class="store">Gulmohar Beauty <i>Step <span id="dp-step">1</span> of 4</i></div>
+        <div class="pname">Saffron Glow Face Serum, 30 ml</div>
+        <div class="rows" id="dp-rows">
+          <div class="row"><span>Item price</span><span>₹499</span></div>
+        </div>
+        <div class="row total"><span>To pay</span><span id="dp-total">₹499</span></div>
+        <button class="btn" id="dp-next" type="button">Continue to checkout</button>
+      </div>
+      <button class="ctl" id="dp-reset" type="button">Start over</button>
+      <p class="note"><b>The tell:</b> each step adds a fee you could not see on the product page. By the time you notice, you've already committed.</p>
+    </div>
+    <div class="side good">
+      <div class="verdict">Honest</div>
+      <div class="screen" aria-label="Honest checkout example">
+        <div class="store">Gulmohar Beauty <i>Product page</i></div>
+        <div class="pname">Saffron Glow Face Serum, 30 ml</div>
+        <div><span class="price">₹596</span></div>
+        <div class="calm">All-inclusive price. Includes delivery, packaging and all taxes. The amount you see is the amount you pay.</div>
+        <div class="rows">
+          <div class="row total"><span>To pay at checkout</span><span>₹596</span></div>
+        </div>
+        <button class="btn" type="button">Add to cart</button>
+      </div>
+      <p class="note"><b>Why it's fair:</b> one total, shown up front, and it doesn't change at checkout.</p>
+    </div>
+  </div>
+  <div class="why"><strong>Why it works</strong><p>Anchoring and sunk effort. The first price sets your reference point, and after several checkout steps backing out feels like wasted effort.</p></div>
+</section>
+
+<!-- 3. BASKET SNEAKING -->
+<section class="pattern" id="basket-sneaking">
+  <div class="ph">
+    <div class="ph-top"><h2>Basket Sneaking</h2><span class="law">CCPA 2023 · OECD: Sneaking</span></div>
+    <p class="def">Adding products, services, donations or charges to your cart without your clear consent, often as boxes that are already ticked.</p>
+  </div>
+  <div class="pair">
+    <div class="side bad">
+      <div class="verdict">Manipulative</div>
+      <div class="screen" aria-label="Manipulative cart example">
+        <div class="store">Kalpa Audio <i>Your cart</i></div>
+        <div class="rows"><div class="row"><span>Kalpa Buds Pro</span><span>₹1,999</span></div></div>
+        <label class="check"><input type="checkbox" id="bs-a" data-p="149" checked><span>1-year damage protection <small>₹149</small></span></label>
+        <label class="check"><input type="checkbox" id="bs-b" data-p="10" checked><span>Round up for charity <small>₹10</small></span></label>
+        <div class="row total"><span>Total</span><span id="bs-total">₹2,158</span></div>
+        <button class="btn" type="button">Place order</button>
+      </div>
+      <p class="note"><b>The tell:</b> you never chose these extras. They are in the total unless you notice and untick them.</p>
+    </div>
+    <div class="side good">
+      <div class="verdict">Honest</div>
+      <div class="screen" aria-label="Honest cart example">
+        <div class="store">Kalpa Audio <i>Your cart</i></div>
+        <div class="rows"><div class="row"><span>Kalpa Buds Pro</span><span>₹1,999</span></div></div>
+        <label class="check"><input type="checkbox" id="bs-c" data-p="149"><span>Add 1-year damage protection? <small>Optional · ₹149</small></span></label>
+        <label class="check"><input type="checkbox" id="bs-d" data-p="10"><span>Round up for charity? <small>Optional · ₹10</small></span></label>
+        <div class="row total"><span>Total</span><span id="bs-total-ok">₹1,999</span></div>
+        <button class="btn" type="button">Place order</button>
+      </div>
+      <p class="note"><b>Why it's fair:</b> extras are offered, not assumed. You opt in.</p>
+    </div>
+  </div>
+  <div class="why"><strong>Why it works</strong><p>Default bias. Most people leave defaults as they are, so a pre-ticked box turns inattention into a sale.</p></div>
+</section>
+
+<!-- 4. CONFIRM SHAMING -->
+<section class="pattern" id="confirm-shaming">
+  <div class="ph">
+    <div class="ph-top"><h2>Confirm Shaming</h2><span class="law">CCPA 2023 · OECD: Interface interference</span></div>
+    <p class="def">Wording the "no" option to make you feel guilty, foolish or ashamed for declining.</p>
+  </div>
+  <div class="pair">
+    <div class="side bad">
+      <div class="verdict">Manipulative</div>
+      <div class="screen" aria-label="Manipulative pop-up example">
+        <div class="store">Thread &amp; Loom <i>Pop-up</i></div>
+        <div class="modal">
+          <h4>Wait! Take 10% off your first order</h4>
+          <p>Join our list for members-only prices.</p>
+          <button class="btn hot" type="button">Yes, I love saving money</button>
+          <button class="link" type="button">No thanks, I'd rather pay full price</button>
+        </div>
+      </div>
+      <p class="note"><b>The tell:</b> the decline link insults you, and it's styled small and grey so it's easy to miss.</p>
+    </div>
+    <div class="side good">
+      <div class="verdict">Honest</div>
+      <div class="screen" aria-label="Honest pop-up example">
+        <div class="store">Thread &amp; Loom <i>Pop-up</i></div>
+        <div class="modal">
+          <h4>Take 10% off your first order</h4>
+          <p>Join our email list. Unsubscribe any time.</p>
+          <button class="btn" type="button">Join and get 10% off</button>
+          <button class="btn ghost" type="button">No thanks</button>
+        </div>
+      </div>
+      <p class="note"><b>Why it's fair:</b> both choices are neutral, visible and equally easy to click.</p>
+    </div>
+  </div>
+  <div class="why"><strong>Why it works</strong><p>Self-image. Clicking a button that says you "like paying full price" feels like admitting to something, so people click yes to avoid it.</p></div>
+</section>
+
+<!-- 5. SUBSCRIPTION TRAP -->
+<section class="pattern" id="subscription-trap">
+  <div class="ph">
+    <div class="ph-top"><h2>Subscription Trap</h2><span class="law">CCPA 2023 · OECD: Obstruction, Sneaking</span></div>
+    <p class="def">Making it easy to sign up and hard to cancel, hiding auto-renewal terms, or taking payment details for a "free" trial without saying what happens next.</p>
+  </div>
+  <div class="pair">
+    <div class="side bad">
+      <div class="verdict">Manipulative</div>
+      <div class="screen" aria-label="Manipulative subscription example">
+        <div class="store">Gulmohar Beauty <i>Glow Club</i></div>
+        <div class="pname">Try Glow Club FREE</div>
+        <div class="calm">Free delivery and early access to sales.</div>
+        <button class="btn hot" type="button">Start my free trial</button>
+        <div class="fine">Card required. After 7 days membership renews automatically at ₹299/month until cancelled. To cancel, call customer care between 10 am and 5 pm on working days.</div>
+      </div>
+      <p class="note"><b>The tell:</b> the price and the auto-renewal sit in tiny grey text, and cancelling needs a phone call during office hours.</p>
+    </div>
+    <div class="side good">
+      <div class="verdict">Honest</div>
+      <div class="screen" aria-label="Honest subscription example">
+        <div class="store">Gulmohar Beauty <i>Glow Club</i></div>
+        <div class="pname">Glow Club · 7 days free, then ₹299/month</div>
+        <div class="clear">We'll remind you by email <b>2 days before</b> the trial ends. Cancel in one tap from <b>Account → Membership</b>, any time, and you won't be charged.</div>
+        <button class="btn" type="button">Start 7-day free trial</button>
+      </div>
+      <p class="note"><b>Why it's fair:</b> the real price is in the headline, you get a reminder, and cancelling takes as long as joining.</p>
+    </div>
+  </div>
+  <div class="why"><strong>Why it works</strong><p>Present bias and inertia. "Free" today feels concrete, the future charge feels distant, and a hard cancellation process means many people never get round to it.</p></div>
+</section>
+
+<!-- 6. INFLATED REFERENCE PRICE -->
+<section class="pattern" id="inflated-price">
+  <div class="ph">
+    <div class="ph-top"><h2>Inflated Reference Price</h2><span class="law">CCPA 2023: Interface interference · OECD: Interface interference</span></div>
+    <p class="def">Crossing out a "regular" price that was never really charged, so an ordinary price looks like a huge discount.</p>
+  </div>
+  <div class="pair">
+    <div class="side bad">
+      <div class="verdict">Manipulative</div>
+      <div class="screen" aria-label="Manipulative discount example">
+        <div class="store">Thread &amp; Loom <i>thread-loom.example</i></div>
+        <div class="pname">Indigo Linen Kurta</div>
+        <div><span class="price">₹999</span><span class="mrp">₹4,999</span><span class="off">80% OFF</span></div>
+        <div class="hcap"><span>Price over the last 90 days</span><span></span></div>
+        <div class="history" aria-label="Price was 999 for all 90 days"><i style="height:30%"></i><i style="height:30%"></i><i style="height:30%"></i><i style="height:30%"></i><i style="height:30%"></i><i style="height:30%"></i><i style="height:30%"></i><i style="height:30%"></i><i style="height:30%"></i><i class="now" style="height:30%"></i></div>
+        <div class="hcap"><span>₹999 every day</span><span>"was" ₹4,999: never charged</span></div>
+        <button class="btn hot" type="button">Grab 80% off</button>
+      </div>
+      <p class="note"><b>The tell:</b> the product has always sold at ₹999. The ₹4,999 exists only to make the price look like a bargain.</p>
+    </div>
+    <div class="side good">
+      <div class="verdict">Honest</div>
+      <div class="screen" aria-label="Honest discount example">
+        <div class="store">Thread &amp; Loom <i>thread-loom.example</i></div>
+        <div class="pname">Indigo Linen Kurta</div>
+        <div><span class="price">₹999</span><span class="mrp">₹1,299</span><span class="offok">23% off</span></div>
+        <div class="hcap"><span>Price over the last 90 days</span><span></span></div>
+        <div class="history" aria-label="Price was 1299 for most of 90 days, now 999"><i style="height:39%"></i><i style="height:39%"></i><i style="height:39%"></i><i style="height:39%"></i><i style="height:39%"></i><i style="height:39%"></i><i style="height:39%"></i><i style="height:39%"></i><i style="height:39%"></i><i class="now" style="height:30%"></i></div>
+        <div class="hcap"><span>Sold at ₹1,299 until last week</span><span>now ₹999</span></div>
+        <button class="btn" type="button">Add to cart</button>
+      </div>
+      <p class="note"><b>Why it's fair:</b> the crossed-out price is one customers actually paid, and the % off matches the two numbers.</p>
+    </div>
+  </div>
+  <div class="why"><strong>Why it works</strong><p>Anchoring. The struck-through number becomes the reference point, so ₹999 feels like saving ₹4,000 rather than paying ₹999.</p></div>
+</section>
+
+<footer>
+  <p><b>Sources.</b> Central Consumer Protection Authority (India), <a href="https://consumeraffairs.nic.in/" target="_blank" rel="noopener">Guidelines for Prevention and Regulation of Dark Patterns, 2023</a> (notified 30 November 2023). OECD (2022), <a href="https://doi.org/10.1787/44f5e846-en" target="_blank" rel="noopener">Dark Commercial Patterns</a>, OECD Digital Economy Papers No. 336.</p>
+  <p>All store names, products and prices on this page are invented for illustration. The page collects no data and does not depict or refer to any real business.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+  const fmt = n => "₹" + n.toLocaleString("en-IN");
+
+  // False urgency: a timer that restarts on every "reload"
+  let secs = 599, timerEl = document.getElementById("fu-timer"), viewersEl = document.getElementById("fu-viewers");
+  const show = () => { const m = Math.floor(secs/60), s = secs%60; timerEl.textContent = "00:" + String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0"); };
+  setInterval(() => { if (secs > 0) secs--; show(); }, 1000);
+  setInterval(() => { viewersEl.textContent = 30 + Math.floor(Math.random()*15); }, 4000);
+  document.getElementById("fu-reload").addEventListener("click", () => { secs = 599; show(); viewersEl.textContent = 30 + Math.floor(Math.random()*15); });
+  document.getElementById("fu-reload-ok").addEventListener("click", e => { e.target.textContent = "↻ Reloaded: same end date, same stock"; });
+
+  // Drip pricing: fees appear one checkout step at a time
+  const fees = [["Platform fee", 19], ["Handling & packaging", 49], ["Convenience fee", 29]];
+  let step = 0; const rows = document.getElementById("dp-rows"), total = document.getElementById("dp-total"),
+        next = document.getElementById("dp-next"), stepEl = document.getElementById("dp-step");
+  const labels = ["Continue to checkout", "Continue to address", "Continue to payment", "Pay now"];
+  next.addEventListener("click", () => {
+    if (step >= fees.length) return;
+    const [name, amt] = fees[step++];
+    const r = document.createElement("div"); r.className = "row fee";
+    r.innerHTML = "<span>+ " + name + "</span><span>" + fmt(amt) + "</span>"; rows.appendChild(r);
+    total.textContent = fmt(499 + fees.slice(0, step).reduce((a, f) => a + f[1], 0));
+    stepEl.textContent = step + 1; next.textContent = labels[step];
+  });
+  document.getElementById("dp-reset").addEventListener("click", () => {
+    step = 0; rows.querySelectorAll(".fee").forEach(n => n.remove()); total.textContent = fmt(499);
+    stepEl.textContent = 1; next.textContent = labels[0];
+  });
+
+  // Basket sneaking: totals follow the checkboxes
+  const wire = (ids, out) => { const upd = () => { let t = 1999; ids.forEach(i => { const c = document.getElementById(i); if (c.checked) t += +c.dataset.p; }); document.getElementById(out).textContent = fmt(t); };
+    ids.forEach(i => document.getElementById(i).addEventListener("change", upd)); upd(); };
+  wire(["bs-a","bs-b"], "bs-total"); wire(["bs-c","bs-d"], "bs-total-ok");
+})();
+</script>

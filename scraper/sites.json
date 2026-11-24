@@ -1,0 +1,19 @@
+{
+  "_comment": "Demo sample: 12 Indian D2C / e-commerce sites, 4 per sector. Edit freely. category_hint / product_hint are substrings used to discover links from the homepage; cart_path is visited after an item is added to the cart.",
+  "sites": [
+    {"name": "boAt",             "sector": "Electronics", "url": "https://www.boat-lifestyle.com/", "category_hint": ["/collections/"], "product_hint": ["/products/"], "cart_path": "/cart"},
+    {"name": "Noise",            "sector": "Electronics", "url": "https://www.gonoise.com/",        "category_hint": ["/collections/"], "product_hint": ["/products/"], "cart_path": "/cart"},
+    {"name": "Boult",            "sector": "Electronics", "url": "https://www.boultaudio.com/",     "category_hint": ["/collections/"], "product_hint": ["/products/"], "cart_path": "/cart"},
+    {"name": "pTron",            "sector": "Electronics", "url": "https://www.ptron.in/",           "category_hint": ["/collections/"], "product_hint": ["/products/"], "cart_path": "/cart"},
+
+    {"name": "Snitch",           "sector": "Fashion",     "url": "https://www.snitch.co.in/",       "category_hint": ["/collections/"], "product_hint": ["/products/"], "cart_path": "/cart"},
+    {"name": "The Souled Store", "sector": "Fashion",     "url": "https://www.thesouledstore.com/", "category_hint": ["/men", "/women"], "product_hint": ["/product/"], "cart_path": "/cart"},
+    {"name": "Bewakoof",         "sector": "Fashion",     "url": "https://www.bewakoof.com/",       "category_hint": ["/men-", "/women-"], "product_hint": ["/p/"], "cart_path": "/cart"},
+    {"name": "Rare Rabbit",      "sector": "Fashion",     "url": "https://thehouseofrare.com/",     "category_hint": ["/collections/"], "product_hint": ["/products/"], "cart_path": "/cart"},
+
+    {"name": "Mamaearth",        "sector": "Cosmetics",   "url": "https://mamaearth.in/",           "category_hint": ["/collections/"], "product_hint": ["/products/"], "cart_path": "/cart"},
+    {"name": "SUGAR Cosmetics",  "sector": "Cosmetics",   "url": "https://in.sugarcosmetics.com/",  "category_hint": ["/collections/"], "product_hint": ["/products/"], "cart_path": "/cart"},
+    {"name": "Plum",             "sector": "Cosmetics",   "url": "https://plumgoodness.com/",       "category_hint": ["/collections/"], "product_hint": ["/products/"], "cart_path": "/cart"},
+    {"name": "mCaffeine",        "sector": "Cosmetics",   "url": "https://www.mcaffeine.com/",      "category_hint": ["/collections/"], "product_hint": ["/products/"], "cart_path": "/cart"}
+  ]
+}
